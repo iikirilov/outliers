@@ -1,0 +1,25 @@
+group 'com.ivaylo'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    commonsCsvVersion = '1.5'
+    logbackVersion = '1.2.3'
+    slf4jVersion = '1.7.25'
+}
+
+dependencies {
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
+    compile "org.apache.commons:commons-csv:$commonsCsvVersion"
+    compile "org.slf4j:slf4j-api:$slf4jVersion"
+    runtimeOnly "ch.qos.logback:logback-core:$logbackVersion",
+            "ch.qos.logback:logback-classic:$logbackVersion"
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
