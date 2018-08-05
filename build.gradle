@@ -18,8 +18,8 @@ ext {
 
 dependencies {
     compile "org.apache.commons:commons-csv:$commonsCsvVersion"
-    compile "org.slf4j:slf4j-api:$slf4jVersion"
     compile group: 'org.apache.commons', name: 'commons-math3', version: "$commonsMathVersion"
+    compile "org.slf4j:slf4j-api:$slf4jVersion"
     runtimeOnly "ch.qos.logback:logback-core:$logbackVersion",
             "ch.qos.logback:logback-classic:$logbackVersion"
     testCompile group: 'junit', name: 'junit', version: '4.12'

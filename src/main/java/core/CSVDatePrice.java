@@ -1,9 +1,12 @@
 package core;
 
-import java.time.LocalDate;
-
 import org.apache.commons.csv.CSVRecord;
 
+import java.time.LocalDate;
+
+/**
+ * Data class to hold/parse a date and price from a CSVRecord object from Apache CSV
+ */
 public class CSVDatePrice extends DatePriceBase {
 
     public CSVDatePrice() {
@@ -35,7 +38,7 @@ public class CSVDatePrice extends DatePriceBase {
 
     private <T> CSVRecord checkType(final T o) {
         if(CSVRecord.class.isAssignableFrom(o.getClass())) {
-           return (CSVRecord) o;
+            return (CSVRecord) o;
         } else {
             throw new RuntimeException(o + " of type: " + o.getClass() +
                     ", is not a CSVRecord and cannot be parsed");

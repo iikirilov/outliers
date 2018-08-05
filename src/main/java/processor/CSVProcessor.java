@@ -22,27 +22,39 @@ import java.nio.file.Paths;
 public class CSVProcessor<E extends ContextAwareAlogorithm> implements Processor<E>{
 
     private static final Logger log = LoggerFactory.getLogger(CSVProcessor.class);
-    private static final float DEFAULT_LOWER_BOUND = 0.9f;
-    private static final float DEFAULT_UPPER_BOUND = 1.1f;
+    public static final double DEFAULT_LOWER_BOUND = 0.9f;
+    public static final double DEFAULT_UPPER_BOUND = 1.1f;
+    public static final String DEFAULT_OUTPUT_FILE_NAME = "out.csv";
 
-    private final float lowerBound;
-    private final float upperBound;
+    private final double lowerBound;
+    private final double upperBound;
 
     CSVParser parser;
     CSVPrinter printer;
 
     public CSVProcessor(final Path path) {
-        this(path, path.getParent().toString(), "out.csv",
+        this(path, path.getParent().toString(), DEFAULT_OUTPUT_FILE_NAME,
                 DEFAULT_LOWER_BOUND, DEFAULT_UPPER_BOUND);
     }
 
     public CSVProcessor(final Path path, final String outputFilePath) {
-        this(path, outputFilePath, "out.csv",
+        this(path, outputFilePath, DEFAULT_OUTPUT_FILE_NAME,
                 DEFAULT_LOWER_BOUND, DEFAULT_UPPER_BOUND);
     }
 
+    public CSVProcessor(final Path path, final double lowerBound, final double upperBound) {
+        this(path, path.getParent().toString(), DEFAULT_OUTPUT_FILE_NAME,
+                lowerBound, upperBound);
+    }
+
     public CSVProcessor(final Path path, final String outputFilePath,
-                        final String outPutFileName, float lowerBound, float upperBound) {
+                        final double lowerBound, final double upperBound) {
+        this(path, outputFilePath, DEFAULT_OUTPUT_FILE_NAME,
+                lowerBound, upperBound);
+    }
+
+    public CSVProcessor(final Path path, final String outputFilePath, final String outPutFileName,
+                        final double lowerBound, final double upperBound) {
         try {
             parser = new CSVParser(Files.newBufferedReader(path), CSVFormat.DEFAULT
                     .withFirstRecordAsHeader()
@@ -84,6 +96,11 @@ public class CSVProcessor<E extends ContextAwareAlogorithm> implements Processor
                     log.info("Value out of bound on line: {}", parser.getCurrentLineNumber());
                 }
             }
+        }
+        try {
+            printer.flush();
+        } catch (IOException e) {
+            log.error("Failed to flush CSVPrinter");
         }
     }
 
